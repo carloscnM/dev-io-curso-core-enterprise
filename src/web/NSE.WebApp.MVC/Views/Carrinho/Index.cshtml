@@ -94,7 +94,7 @@
                             </table>
 
                             <div class="card-body border-top">
-                                <a href="#" class="btn btn-primary float-md-right"> Finalizar Compra <i class="fa fa-chevron-right"></i> </a>
+                                <a asp-controller="Pedido" asp-action="EnderecoEntrega" class="btn btn-primary float-md-right"> Finalizar Compra <i class="fa fa-chevron-right"></i> </a>
                                 <a asp-controller="Catalogo" asp-action="Index" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continuar Comprando </a>
                             </div>
                         </div>
@@ -104,11 +104,12 @@
                     <aside class="col-md-3">
                         <div class="card mb-3">
                             <div class="card-body">
-                                <form method="post" asp-controller="Carrinho" asp-action="AplicarVoucher">
+                                <form asp-action="AplicarVoucher">
                                     <div class="form-group">
-                                        <label>Possui um Cupom?</label>
+                                        <label>Possui um Voucher?</label>
+
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="voucherCodigo" id="voucherCodigo" value="@Model.Voucher?.Codigo" placeholder="Cupom Desconto">
+                                            <input type="text" class="form-control" name="VoucherCodigo" id="VoucherCodigo" value="@Model.Voucher?.Codigo" placeholder="Voucher Desconto">
                                             <span class="input-group-append">
                                                 <button type="submit" class="btn btn-primary">Aplicar</button>
                                             </span>
@@ -140,7 +141,7 @@
                                 </dl>
                                 <hr>
                                 <p class="text-center mb-3">
-                                    <img src="images/misc/payments.png" height="26">
+                                    <img src="~/images/misc/payments.png" height="26">
                                 </p>
 
                             </div>
@@ -188,7 +189,7 @@
                             </svg>
                             <br /><br />
                             <h4>Seu carrinho está vazio</h4>
-                            <h5>Vá para a <a asp-controller="Catalogo">página inicial</a> e confira nossos produtos. <br />Quando encontrar um que goste clique no botão adicionar ao carrinho ;)</h5>
+                            <h5>Vá para a <a asp-controller="Catalogo">página inicial</a> e confira nossos carrinhos. <br />Quando encontrar um que goste clique no botão adicionar ao carrinho ;)</h5>
                         </div>
                     </div>
                 </div>

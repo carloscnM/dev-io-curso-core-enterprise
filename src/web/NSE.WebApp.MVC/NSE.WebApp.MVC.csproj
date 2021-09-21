@@ -13,6 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Pedido\ConfirmacaoPedido.cshtml" />
+    <None Include="Views\Pedido\EnderecoEntrega.cshtml" />
+    <None Include="Views\Pedido\MeusPedidos.cshtml" />
+    <None Include="Views\Pedido\Pagamento.cshtml" />
+    <None Include="Views\Pedido\_Endereco.cshtml" />
+    <None Include="Views\Pedido\_NovoEndereco.cshtml" />
+    <None Include="Views\Pedido\_ResumoFinanceiro.cshtml" />
     <None Include="Views\Shared\Components\Carrinho\Default.cshtml" />
     <None Include="Views\Shared\Components\Summary\Default.cshtml" />
     <None Include="wwwroot\css\responsive.css.map" />

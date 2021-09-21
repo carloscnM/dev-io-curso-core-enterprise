@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Pedido\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\building_blocks\NSE.Core\NSE.Core.csproj" />
   </ItemGroup>
 
