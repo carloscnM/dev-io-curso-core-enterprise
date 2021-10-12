@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>39d2785d-cd58-4ba5-b40a-c4886c8823f4</UserSecretsId>
+    <UserSecretsId>ece6f9a0-56c5-470e-95b6-a28b69ce86f3</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
@@ -24,10 +24,7 @@
     <ProjectReference Include="..\..\building_blocks\NSE.Core\NSE.Core.csproj" />
     <ProjectReference Include="..\..\building_blocks\NSE.MessageBus\NSE.MessageBus.csproj" />
     <ProjectReference Include="..\..\building_blocks\NSE.WebApi.Core\NSE.WebApi.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\NSE.Pagamentos.NerdsPag\NSE.Pagamentos.NerdsPag.csproj" />
   </ItemGroup>
 
 </Project>

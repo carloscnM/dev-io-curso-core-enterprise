@@ -53,6 +53,8 @@ namespace NSE.Pedidos.Domain.Pedido
             Voucher = voucher;
         }
 
+        
+
         public void AtribuirEndereco(Endereco endereco)
         {
             Endereco = endereco;
@@ -90,6 +92,16 @@ namespace NSE.Pedidos.Domain.Pedido
 
             ValorTotal = valor < 0 ? 0 : valor;
             Desconto = desconto;
+        }
+
+        public void FinalizarPedido()
+        {
+            PedidoStatus = PedidoStatus.Pago;
+        }
+
+        public void CancelarPedido()
+        {
+            PedidoStatus = PedidoStatus.Cancelado;
         }
     }
 }

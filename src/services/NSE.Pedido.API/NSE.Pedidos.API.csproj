@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Services\PedidoIntegrationHandler.cs~RF2b4db95.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="dapper" Version="2.0.90" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />

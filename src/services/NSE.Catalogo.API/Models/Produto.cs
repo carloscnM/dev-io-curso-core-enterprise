@@ -15,5 +15,15 @@ namespace NSE.Catalogo.API.Models
         public string Imagem { get; set; }
         public int QuantidadeEstoque { get; set; }
 
+        public void RetirarEstoque(int quantidadeSolicitada)
+        {
+            if (QuantidadeEstoque >= quantidadeSolicitada)
+                QuantidadeEstoque -= quantidadeSolicitada;
+        }
+
+        public bool EstaDisponivel(int quantidadeSolicitada)
+        {
+            return Ativo && QuantidadeEstoque >= quantidadeSolicitada;
+        }
     }
 }

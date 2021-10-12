@@ -1,6 +1,8 @@
 ﻿using FluentValidation.Results;
 using MediatR;
 using NSE.Core.Messages;
+using NSE.Core.Messages.Integration;
+using NSE.MessageBus;
 using NSE.Pedidos.API.Application.DTO;
 using NSE.Pedidos.API.Application.Events;
 using NSE.Pedidos.Domain;
@@ -17,12 +19,15 @@ namespace NSE.Pedidos.API.Application.Commands
 
         private readonly IPedidoRepository _pedidoRepository;
         private readonly IVoucherRepository _voucherRepository;
+        private readonly IMessageBus _bus;
 
         public PedidoCommandHandler(IVoucherRepository voucherRepository,
-                                    IPedidoRepository pedidoRepository)
+                                    IPedidoRepository pedidoRepository,
+                                    IMessageBus bus)
         {
             _voucherRepository = voucherRepository;
             _pedidoRepository = pedidoRepository;
+            _bus = bus;
         }
 
 
@@ -32,11 +37,11 @@ namespace NSE.Pedidos.API.Application.Commands
 
             Pedido pedido = MapearPedido(message);
 
-            if (!await AplicarVoucher(message, pedido)) return message.ValidationResult;
+            if (!await AplicarVoucher(message, pedido)) return ValidationResult;
 
-            if (!ValidarPedido(pedido)) return message.ValidationResult;
+            if (!ValidarPedido(pedido)) return ValidationResult;
 
-            if (!ProcessarPagamento(pedido)) return message.ValidationResult;
+            if (!await ProcessarPagamento(pedido, message)) return ValidationResult;
 
             pedido.AutorizarPedido();
 
@@ -61,8 +66,11 @@ namespace NSE.Pedidos.API.Application.Commands
                 Estado = message.Endereco.Estado
             };
 
-            var pedido = new Pedido(message.ClienteId, message.ValorTotal, message.PedidoItems.Select(PedidoItemDTO.ParaPedidoItem).ToList(),
-                message.VoucherUtilizado, message.Desconto);
+            Pedido pedido = new Pedido(message.ClienteId, 
+                                        message.ValorTotal, 
+                                        message.PedidoItems.Select(PedidoItemDTO.ParaPedidoItem).ToList(),
+                                        message.VoucherUtilizado, 
+                                        message.Desconto);
 
             pedido.AtribuirEndereco(endereco);
             return pedido;
@@ -116,9 +124,31 @@ namespace NSE.Pedidos.API.Application.Commands
             return true;
         }
 
-        public bool ProcessarPagamento(Pedido pedido)
+        public async Task<bool> ProcessarPagamento(Pedido pedido, AdicionarPedidoCommand message)
         {
-            return true;
+            PedidoIniciadoIntegrationEvent pedidoIniciado = new PedidoIniciadoIntegrationEvent
+            {
+                PedidoId = pedido.Id,
+                ClienteId = pedido.ClienteId,
+                Valor = pedido.ValorTotal,
+                TipoPamento = 1, //TODO - Alterar quando tiver mais tipos.
+                NomeCartao = message.NomeCartao,
+                NumeroCartao = message.NumeroCartao,
+                MesAnoVencimento = message.ExpiracaoCartao,
+                CVV = message.CvvCartao
+            };
+
+            ResponseMessage result = await _bus.RequestAsync<PedidoIniciadoIntegrationEvent, ResponseMessage>(pedidoIniciado);
+
+            if (result.ValidationResult.IsValid)
+                return true;
+
+            foreach (var erro in result.ValidationResult.Errors)
+            {
+                AdicionarErro(erro.ErrorMessage);
+            }
+
+            return false;
         }
 
 
