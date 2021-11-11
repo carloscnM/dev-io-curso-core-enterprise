@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Shared\Components\Carrinho\Default.cshtml" />
+    <Content Remove="Views\Shared\Components\Paginacao\Default.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
     <None Include="Views\Pedido\_NovoEndereco.cshtml" />
     <None Include="Views\Pedido\_ResumoFinanceiro.cshtml" />
     <None Include="Views\Shared\Components\Carrinho\Default.cshtml" />
+    <None Include="Views\Shared\Components\Paginacao\Default.cshtml" />
     <None Include="Views\Shared\Components\Summary\Default.cshtml" />
     <None Include="wwwroot\css\responsive.css.map" />
     <None Include="wwwroot\css\ui.css.map" />
@@ -78,6 +80,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.Core.Api" Version="2.41.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.4" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="5.0.1" />

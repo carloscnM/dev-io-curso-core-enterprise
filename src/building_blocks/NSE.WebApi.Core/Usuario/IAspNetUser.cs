@@ -7,10 +7,11 @@ namespace NSE.WebApi.Core.Usuario
 {
     public interface IAspNetUser
     {
-        public string Name { get; }
+        string Name { get; }
         Guid ObterUserId();
         string ObterUserEmail();
         string ObterUserToken();
+        string ObterUserRefreshToken();
         bool EstaAutenticado();
         bool PossuiRole(string role);
         IEnumerable<Claim> ObterClaims();

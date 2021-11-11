@@ -1,0 +1,23 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model IPagedList
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @Html.Raw(this.ObterDisabled(Model.PageIndex, 1))">
+            <a class="page-link" asp-action="@Model.ReferenceAction" asp-route-pageSize="@Model.PageSize" asp-route-page="@(Model.PageIndex-1)" asp-route-query="@Model.Query">&laquo;</a>
+        </li>
+        @{
+            for (int i = 1; i < Model.TotalPages + 1; i++)
+            {
+                <li class="page-item @Html.Raw(this.ObterActive(i, Model.PageIndex))">
+                    <a class="page-link" asp-action="@Model.ReferenceAction" asp-route-pageSize="@Model.PageSize" asp-route-page="@i" asp-route-query="@Model.Query">
+                        @i
+                    </a>
+                </li>
+            }
+        }
+        <li class="page-item @Html.Raw(this.ObterDisabled(Model.PageIndex, (int)Model.TotalPages))">
+            <a class="page-link" asp-action="@Model.ReferenceAction" asp-route-pageSize="@Model.PageSize" asp-route-page="@(Model.PageIndex+1)" asp-route-query="@Model.Query">&raquo;</a>
+        </li>
+    </ul>
+</nav>

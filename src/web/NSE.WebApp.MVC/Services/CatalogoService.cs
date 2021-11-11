@@ -29,13 +29,13 @@ namespace NSE.WebApp.MVC.Services
             return await DeserializarObjetoResponse<ProdutoViewModel>(response);
         }
 
-        public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
+        public async Task<PagedViewModel<ProdutoViewModel>> ObterPaginado(int pageSize, int pageIndex, string query = null)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("catalogo/produtos");
+            HttpResponseMessage response = await _httpClient.GetAsync($"catalogo/produtos?pageSize={pageSize}&page={pageIndex}&query={query}");
 
             TratarErrosResponse(response);
 
-            return await DeserializarObjetoResponse<IEnumerable<ProdutoViewModel>>(response);
+            return await DeserializarObjetoResponse<PagedViewModel<ProdutoViewModel>>(response);
         }
     }
 }

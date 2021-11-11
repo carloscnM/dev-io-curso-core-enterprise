@@ -89,5 +89,15 @@ namespace NSE.WebApp.MVC.Extensions
 
             return $"<span class='badge badge-{statusClasse}'>{statusMensagem}</span>";
         }
+
+        public static string ObterActive(this RazorPage page, int valor1, int valor2)
+        {
+            return valor1==valor2 ? "active" : "";
+        }
+
+        public static string ObterDisabled(this RazorPage page, int valor1, int valor2)
+        {
+            return valor1 == valor2 ? "disabled" : "";
+        }
     }
 }

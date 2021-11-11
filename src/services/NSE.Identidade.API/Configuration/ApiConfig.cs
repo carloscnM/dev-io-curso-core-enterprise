@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using NSE.WebApi.Core.Identidade;
+using NetDevPack.Security.Jwt.AspNetCore;
+using NSE.WebApi.Core.Usuario;
+using NSE.Identidade.API.Services;
 
 namespace NSE.Identidade.API.Configuration
 {
@@ -11,6 +14,9 @@ namespace NSE.Identidade.API.Configuration
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddScoped<AuthenticationService>();
+            services.AddScoped<IAspNetUser, AspNetUser>();
 
             return services;
         }
@@ -33,6 +39,8 @@ namespace NSE.Identidade.API.Configuration
             {
                 endpoints.MapControllers();
             });
+
+            app.UseJwksDiscovery();
 
             return app;
         }
