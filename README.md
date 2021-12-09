@@ -49,10 +49,11 @@ Além das funcionalidades criadas durante o curso, serão feitas melhorias no si
   Criar uma aplicação web para administrar os cadastros essenciais para o funcionamento do E-commerce
   
 - [ ] Gestão de produtos
-      - [ ] Inclusão/Alteração de produtos
-      - [ ] Gerenciamento do Estoque
+    - [ ] Inclusão/Alteração de produtos
+    - [ ] Gerenciamento do Estoque
+      
 - [ ] DaskBoard da operação
-      - [ ] Pedidos
-      - [ ] Vendas
-      - [ ] Movimentação Financeira 
+  - [ ] Pedidos
+  - [ ] Vendas
+  - [ ] Movimentação Financeira 
 
