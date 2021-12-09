@@ -52,7 +52,7 @@ Além das funcionalidades criadas durante o curso, serão feitas melhorias no si
     - [ ] Inclusão/Alteração de produtos
     - [ ] Gerenciamento do Estoque
       
-- [ ] DaskBoard da operação
+- [ ] DashBoard da operação
   - [ ] Pedidos
   - [ ] Vendas
   - [ ] Movimentação Financeira 
