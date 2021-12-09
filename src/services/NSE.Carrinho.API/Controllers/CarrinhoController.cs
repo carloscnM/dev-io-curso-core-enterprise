@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NSE.Carrinho.API.Data;
 using NSE.Carrinho.API.Model;
 using NSE.WebApi.Core.Controllers;
@@ -11,18 +12,20 @@ using System.Threading.Tasks;
 
 namespace NSE.Carrinho.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CarrinhoController : MainController
     {
 
         private readonly IAspNetUser _aspNetUser;
         private readonly CarrinhoContext _contexto;
+        private readonly ILogger<CarrinhoController> _logger;
 
         public CarrinhoController(IAspNetUser aspNetUser,
-                                    CarrinhoContext context)
+                                    CarrinhoContext context, ILogger<CarrinhoController> logger)
         {
             _aspNetUser = aspNetUser;
             _contexto = context;
+            _logger = logger;
         }
 
         [HttpGet("carrinho")]
@@ -113,6 +116,8 @@ namespace NSE.Carrinho.API.Controllers
 
         private async Task<CarrinhoCliente> ObterCarrinhoCliente()
         {
+            _logger.LogInformation($"user id: {_aspNetUser.ObterUserId()}");
+
             return await _contexto.CarrinhoCliente
                 .Include(c => c.Itens)
                 .FirstOrDefaultAsync(c => c.ClienteId == _aspNetUser.ObterUserId());

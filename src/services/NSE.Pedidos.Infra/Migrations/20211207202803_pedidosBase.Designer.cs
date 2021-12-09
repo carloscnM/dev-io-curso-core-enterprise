@@ -10,8 +10,8 @@ using NSE.Pedidos.Infra.Data;
 namespace NSE.Pedidos.Infra.Migrations
 {
     [DbContext(typeof(PedidosContext))]
-    [Migration("20210914205757_pedidos")]
-    partial class pedidos
+    [Migration("20211207202803_pedidosBase")]
+    partial class pedidosBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

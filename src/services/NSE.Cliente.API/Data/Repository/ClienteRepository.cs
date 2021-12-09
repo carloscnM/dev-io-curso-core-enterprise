@@ -35,7 +35,7 @@ namespace NSE.Clientes.API.Data.Repository
 
         public async Task<Endereco> ObterEnderecoPorId(Guid id)
         {
-            return await _context.Enderecos.FirstOrDefaultAsync(e => e.ClienteId == id);
+            return await _context.Enderecos.FirstOrDefaultAsync(e => e.ClienteId.ToString() == id.ToString());
         }
 
         public void AdicionarEndereco(Endereco endereco)

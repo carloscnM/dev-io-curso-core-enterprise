@@ -1,0 +1,5 @@
+Use o projeto onde está o contexto
+
+Add-Migration CreateDataBaseExemplo -Context PedidosContext -StartupProject NSE.Pedidos.API
+
+Update-Database -Context PedidosContext -StartupProject NSE.PedidoS.API

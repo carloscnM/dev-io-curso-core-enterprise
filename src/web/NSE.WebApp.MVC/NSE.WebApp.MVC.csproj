@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -8,76 +8,10 @@
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="Views\Shared\Components\Carrinho\Default.cshtml" />
-    <Content Remove="Views\Shared\Components\Paginacao\Default.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Pedido\ConfirmacaoPedido.cshtml" />
-    <None Include="Views\Pedido\EnderecoEntrega.cshtml" />
-    <None Include="Views\Pedido\MeusPedidos.cshtml" />
-    <None Include="Views\Pedido\Pagamento.cshtml" />
-    <None Include="Views\Pedido\_Endereco.cshtml" />
-    <None Include="Views\Pedido\_NovoEndereco.cshtml" />
-    <None Include="Views\Pedido\_ResumoFinanceiro.cshtml" />
-    <None Include="Views\Shared\Components\Carrinho\Default.cshtml" />
-    <None Include="Views\Shared\Components\Paginacao\Default.cshtml" />
-    <None Include="Views\Shared\Components\Summary\Default.cshtml" />
-    <None Include="wwwroot\css\responsive.css.map" />
-    <None Include="wwwroot\css\ui.css.map" />
-    <None Include="wwwroot\fonts\fontawesome\scss\brands.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\fontawesome.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\regular.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\solid.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\v4-shims.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_animated.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_bordered-pulled.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_core.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_fixed-width.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_icons.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_larger.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_list.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_mixins.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_rotated-flipped.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_screen-reader.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_shims.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_stacked.scss" />
-    <None Include="wwwroot\fonts\fontawesome\scss\_variables.scss" />
-    <None Include="wwwroot\fonts\fontawesome\webfonts\fa-brands-400.svg" />
-    <None Include="wwwroot\fonts\fontawesome\webfonts\fa-brands-400.woff2" />
-    <None Include="wwwroot\fonts\fontawesome\webfonts\fa-regular-400.svg" />
-    <None Include="wwwroot\fonts\fontawesome\webfonts\fa-regular-400.woff2" />
-    <None Include="wwwroot\fonts\fontawesome\webfonts\fa-solid-900.svg" />
-    <None Include="wwwroot\fonts\fontawesome\webfonts\fa-solid-900.woff2" />
-    <None Include="wwwroot\js\script.js" />
-    <None Include="wwwroot\js\site.js" />
-    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
-    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
-    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
-    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
-    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
-    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
-    <None Include="wwwroot\lib\bootstrap\LICENSE" />
-    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
-    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
-    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
-    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
-    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
-    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
-    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
-    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
-    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Views\Catalogo\" />
+		<Folder Include="Views\Pedido\" />
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Grpc.Core.Api" Version="2.41.1" />

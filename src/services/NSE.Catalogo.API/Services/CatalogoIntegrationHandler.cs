@@ -35,8 +35,10 @@ namespace NSE.Catalogo.API.Services
 
         private void SetSubsCribers()
         {
+            _logger.LogInformation($"Conectando na fila...");
             _bus.SubscribeAsync<PedidoAutorizadoIntegrationEvent>("PedidoAutorizado", async request =>
                 await BaixarEstoque(request));
+            _logger.LogInformation($"Fim...");
         }
 
         private async Task BaixarEstoque(PedidoAutorizadoIntegrationEvent message)

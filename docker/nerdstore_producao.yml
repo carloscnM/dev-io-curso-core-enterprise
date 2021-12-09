@@ -1,0 +1,142 @@
+version: "3"
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbit-nerdstore
+    environment:
+        RABBITMQ_DEFAULT_USER: "nerdstore"
+        RABBITMQ_DEFAULT_PASS: "nerdstore"
+    ports:
+      - "15672:15672"
+
+  sql-server:
+    image: carloscnm/nerdstore-sql-server:latest
+    container_name: nerdstore-sql-server
+    build: 
+        context: ../sql
+        dockerfile: ./Dockerfile
+    ports:
+      - "1433:1433"
+    environment:
+            SA_PASSWORD: "MeuDB@123"
+            ACCEPT_EULA: "Y"  
+
+  web-loja:
+    image: carloscnm/nerdstore-web-mvc-loja:latest
+    #container_name: nerdstore-web-mvc-loja
+    build:
+      context: ../src
+      dockerfile: ./web/NSE.WebApp.MVC/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=http://*:5001
+    volumes:
+      - dpkeys:/var/data_protection_keys/
+    depends_on:
+      - api-catalogo
+      - api-identidade
+      - api-cliente
+      - api-bff-compras
+
+  api-identidade:
+    image: carloscnm/nerdstore-api-identidade:latest
+    container_name: nerdstore-api-identidade
+    build:
+      context: ../src
+      dockerfile: ./services/NSE.Identidade.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=https://+:44350;http://+:34076
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=carlos357951
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/nerdstore-certificate.pfx
+    volumes:
+      - ./certs:/https:ro
+    depends_on:
+      - rabbitmq  
+      - sql-server  
+
+  api-catalogo:
+    image: carloscnm/nerdstore-api-catalogo:latest
+    container_name: nerdstore-api-catalogo
+    build:
+      context: ../src
+      dockerfile: ./services/NSE.Catalogo.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=http://*:45773
+    depends_on:
+      - rabbitmq
+
+  api-carrinho:
+    image: carloscnm/nerdstore-api-carrinho:latest
+    container_name: nerdstore-api-carrinho
+    build:
+      context: ../src
+      dockerfile: ./services/NSE.Carrinho.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=http://*:52629
+    depends_on:
+      - rabbitmq  
+      - sql-server 
+
+  api-cliente:
+    image: carloscnm/nerdstore-api-cliente:latest
+    container_name: nerdstore-api-cliente
+    build:
+      context: ../src
+      dockerfile: ./services/NSE.Cliente.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=http://*:52634
+    depends_on:
+      - rabbitmq
+
+  api-pagamento:
+    image: carloscnm/nerdstore-api-pagamento:latest
+    container_name: nerdstore-api-pagamento
+    build:
+      context: ../src
+      dockerfile: ./services/NSE.Pagamento.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=http://*:43507
+       
+
+  api-pedidos:
+    image: carloscnm/nerdstore-api-pedidos:latest
+    container_name: nerdstore-api-pedidos
+    build:
+      context: ../src
+      dockerfile: ./services/NSE.Pedido.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=http://*:44376
+    
+
+  api-bff-compras:
+    image: carloscnm/nerdstore-api-bff-compras:latest
+    container_name: nerdstore-api-bff-compras
+    build:
+      context: ../src
+      dockerfile: ./api_gateways/NSE.Bff.Compras/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=http://*:35336
+
+  nerdstore-server:
+    image: carloscnm/nerdstore-server:latest
+    container_name: nerdstore-server
+    build:
+      context: ./
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web-loja
+
+volumes:
+    dpkeys:

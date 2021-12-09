@@ -10,8 +10,8 @@ using NSE.Pagamentos.API.Data;
 namespace NSE.Pagamentos.API.Migrations
 {
     [DbContext(typeof(PagamentosContext))]
-    [Migration("20210927214618_Pagamentos")]
-    partial class Pagamentos
+    [Migration("20211207202128_basePagamento")]
+    partial class basePagamento
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using NSE.Bff.Compras.Services.gRPC;
 using NSE.Carrinho.API.Services.gRPC;
+using NSE.WebAPI.Core.Extensions;
 
 namespace NSE.Bff.Compras.Configuration
 {
@@ -16,7 +17,8 @@ namespace NSE.Bff.Compras.Configuration
                 {
                     options.Address = new System.Uri(configuration["CarrinhoUrl"]);
                 }
-            ).AddInterceptor<GrpcServiceInterceptor>();
+            ).AddInterceptor<GrpcServiceInterceptor>()
+            .AllowSelfSignedCertificate();
         }
     }
 }

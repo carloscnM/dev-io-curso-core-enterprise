@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NSE.Pagamentos.API.Migrations
 {
-    public partial class Pagamentos : Migration
+    public partial class basePagamento : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

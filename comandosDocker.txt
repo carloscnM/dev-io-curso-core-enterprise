@@ -1,0 +1,11 @@
+docker-compose -f .\nerdstore_producao.yml up
+
+docker-compose -f .\nerdstore_producao.yml up --scale web-loja=4
+
+=====Comandos Certificados Openssl
+
+openssl pkcs12 -in nerdstore-certificate.pfx -nocerts -out nerdstore-certificate.pem -nodes
+
+openssl rsa -in nerdstore-certificate.pem -out nerdstore-certificate.key
+
+openssl pkcs12 -in nerdstore-certificate.pfx -nokeys -out nerdstore-certificate.pem

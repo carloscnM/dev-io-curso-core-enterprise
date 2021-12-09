@@ -7,10 +7,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["src/services/NSE.Catalogo.API/NSE.Catalogo.API.csproj", "src/services/NSE.Catalogo.API/"]
-RUN dotnet restore "src/services/NSE.Catalogo.API/NSE.Catalogo.API.csproj"
+COPY ["./services/NSE.Catalogo.API/NSE.Catalogo.API.csproj", "services/NSE.Catalogo.API/"]
+COPY ["./building_blocks/NSE.Core/NSE.Core.csproj", "building_blocks/NSE.Core/"]
+COPY ["./building_blocks/NSE.WebApi.Core/NSE.WebApi.Core.csproj", "building_blocks/NSE.WebApi.Core/"]
+COPY ["./building_blocks/NSE.MessageBus/NSE.MessageBus.csproj", "building_blocks/NSE.MessageBus/"]
+
+
+RUN dotnet restore "services/NSE.Catalogo.API/NSE.Catalogo.API.csproj"
 COPY . .
-WORKDIR "/src/src/services/NSE.Catalogo.API"
+WORKDIR "services/NSE.Catalogo.API"
 RUN dotnet build "NSE.Catalogo.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

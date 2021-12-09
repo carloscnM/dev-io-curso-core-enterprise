@@ -51,7 +51,10 @@ namespace NSE.Pedidos.API.Services
 
             using (IServiceScope scope = _serviceProvider.CreateScope())
             {
+                _logger.LogInformation("Buscando pedidos autorizados...");
                 IPedidoQueries pedidoQueries = scope.ServiceProvider.GetRequiredService<IPedidoQueries>();
+
+
                 PedidoDTO pedido = await pedidoQueries.ObterPedidosAutorizados();
 
                 if (pedido == null) return;

@@ -10,11 +10,7 @@ namespace NSE.Clientes.API.Data.Mappings
         public void Configure(EntityTypeBuilder<Cliente> builder)
         {
             builder.HasKey(c => c.Id);
-
-            builder.Property(c => c.Id)
-                .HasColumnType("varchar(450)");
-                    
-
+    
             builder.Property(c => c.Nome)
                 .IsRequired()
                 .HasColumnType("varchar(200)");

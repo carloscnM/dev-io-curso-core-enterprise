@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSE.Clientes.API.Application.Commands;
 using NSE.Clientes.API.Models;
 using NSE.Core.Mediator;
@@ -13,17 +14,20 @@ namespace NSE.Clientes.API.Controllers
         private readonly IClienteRepository _clienteRepository;
         private readonly IMediatorHandler _mediator;
         private readonly IAspNetUser _user;
+        private readonly ILogger<ClientesController> _logger;
 
-        public ClientesController(IClienteRepository clienteRepository, IMediatorHandler mediator, IAspNetUser user)
+        public ClientesController(IClienteRepository clienteRepository, IMediatorHandler mediator, IAspNetUser user, ILogger<ClientesController> logger)
         {
             _clienteRepository = clienteRepository;
             _mediator = mediator;
             _user = user;
+            _logger = logger;
         }
 
         [HttpGet("cliente/endereco")]
         public async Task<IActionResult> ObterEndereco()
         {
+            _logger.LogInformation($"Obtendo endereço.... {_user.ObterUserId()}");
             var endereco = await _clienteRepository.ObterEnderecoPorId(_user.ObterUserId());
 
             return endereco == null ? NotFound() : CustomResponse(endereco);
