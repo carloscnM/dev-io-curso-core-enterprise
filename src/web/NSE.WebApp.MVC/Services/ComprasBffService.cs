@@ -141,6 +141,7 @@ namespace NSE.WebApp.MVC.Services
             {
                 pedido.Endereco = new EnderecoViewModel
                 {
+                    Id = endereco.Id,
                     Logradouro = endereco.Logradouro,
                     Numero = endereco.Numero,
                     Bairro = endereco.Bairro,

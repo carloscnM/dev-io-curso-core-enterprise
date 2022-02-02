@@ -1361,3 +1361,14 @@ a[class*='card']:hover .title { color: #3167eb; }
 }
 
 /*# sourceMappingURL=ui.css.map */
+
+
+
+#cardEnderecoPedido {
+    transition: background-color 0.1s
+}
+
+#cardEnderecoPedido:hover {
+    background-color: aquamarine;
+
+}

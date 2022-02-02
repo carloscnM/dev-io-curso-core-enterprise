@@ -1,4 +1,4 @@
-﻿function BuscaCep() {
+﻿function ModalEndereco() {
     $(document).ready(function () {
 
         function limpa_formulário_cep() {
@@ -7,7 +7,19 @@
             $("#Endereco_Bairro").val("");
             $("#Endereco_Cidade").val("");
             $("#Endereco_Estado").val("");
+            $("#Endereco_Complemento").val("");
+            $("#Endereco_Numero").val("");
         }
+
+
+        $(".endereco-new").click(function (d) {
+
+            $("#titulo_modal_endereco").text("Novo Endereço");
+
+            $("#Endereco_Id").val("");
+            $("#Endereco_Cep").val("");
+            limpa_formulário_cep();
+        })
 
         //Quando o campo cep perde o foco.
         $("#Endereco_Cep").blur(function () {

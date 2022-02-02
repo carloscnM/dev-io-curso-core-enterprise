@@ -25,6 +25,10 @@ namespace NSE.WebApp.MVC.Controllers
             if (carrinho.Itens.Count == 0) return RedirectToAction("Index", "Carrinho");
 
             var endereco = await _clienteService.ObterEndereco();
+            var enderecos = await _clienteService.ObterTodosEnderecos();
+
+            ViewBag.Enderecos = enderecos;
+
             var pedido = _comprasBffService.MapearParaPedido(carrinho, endereco);
 
             return View(pedido);

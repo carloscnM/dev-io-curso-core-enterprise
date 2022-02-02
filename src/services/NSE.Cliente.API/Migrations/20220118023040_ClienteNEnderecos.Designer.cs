@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NSE.Clientes.API.Data;
 
 namespace NSE.Clientes.API.Migrations
 {
     [DbContext(typeof(ClientesContext))]
-    partial class ClientesContextModelSnapshot : ModelSnapshot
+    [Migration("20220118023040_ClienteNEnderecos")]
+    partial class ClienteNEnderecos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,9 +25,6 @@ namespace NSE.Clientes.API.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("EnderecoDefaultId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Excluido")

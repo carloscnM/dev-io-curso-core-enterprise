@@ -1,5 +1,6 @@
 ﻿using NSE.Core.DomainObjects;
 using System;
+using System.Collections.Generic;
 
 namespace NSE.Clientes.API.Models
 {
@@ -9,7 +10,8 @@ namespace NSE.Clientes.API.Models
         public Email Email { get; private set; }
         public Cpf Cpf { get; private set; }
         public bool Excluido { get; private set; }
-        public Endereco Endereco { get; private set; }
+        public Guid? EnderecoDefaultId { get; set; }
+        public List<Endereco> Enderecos { get; private set; }
 
         protected Cliente() {}
 
@@ -27,9 +29,9 @@ namespace NSE.Clientes.API.Models
             Email = new Email(email);
         }
 
-        public void AtribuirEndereco(Endereco endereco)
+        public void AtribuirEnderecoDefault(Endereco endereco)
         {
-            Endereco = endereco;
+            EnderecoDefaultId = endereco.Id;
         }
     }
 }

@@ -10,7 +10,9 @@ namespace NSE.Clientes.API.Application.Commands
 {
     public class ClienteCommandHandler : CommandHandler,
         IRequestHandler<RegistrarClienteCommand, ValidationResult>,
-        IRequestHandler<AdicionarEnderecoCommand, ValidationResult>
+        IRequestHandler<AdicionarEnderecoCommand, ValidationResult>,
+        IRequestHandler<AlterarEnderecoCommand, ValidationResult>,
+        IRequestHandler<AtualizarEnderecoPadraoCommand, ValidationResult>
     {
         private readonly IClienteRepository _clienteRepository;
 
@@ -47,7 +49,72 @@ namespace NSE.Clientes.API.Application.Commands
             var endereco = new Endereco(message.Logradouro, message.Numero, message.Complemento, message.Bairro, message.Cep, message.Cidade, message.Estado, message.ClienteId);
             _clienteRepository.AdicionarEndereco(endereco);
 
+            Cliente cliente = await _clienteRepository.ObterPorId(message.ClienteId);
+
+            if (cliente == null) 
+            {
+                AdicionarErro("Cliente não encontrado, não será possível adicionar o endereço");
+                return ValidationResult;
+            }
+
+            cliente.AtribuirEnderecoDefault(endereco);
+
+            _clienteRepository.Atualizar(cliente);
+
             return await PersistirDados(_clienteRepository.UnitOfWork);
         }
+
+        public async Task<ValidationResult> Handle(AtualizarEnderecoPadraoCommand  message, CancellationToken cancellationToken)
+        {
+            if (!message.EhValido()) return message.ValidationResult;
+
+
+            var endereco = await _clienteRepository.ObterEnderecoPorId(message.ClienteId,message.Id);
+
+            if (endereco == null)
+            {
+                AdicionarErro("Endereço não encontrado, não será possível alterar o endereço padrão");
+                return ValidationResult;
+            }
+
+            var cliente = await _clienteRepository.ObterPorId(message.ClienteId);
+
+            if (cliente == null)
+            {
+                AdicionarErro("Cliente não encontrado, não será possível alterar o endereço padrão");
+                return ValidationResult;
+            }
+
+
+            cliente.AtribuirEnderecoDefault(endereco);
+
+            _clienteRepository.Atualizar(cliente);
+
+            return await PersistirDados(_clienteRepository.UnitOfWork);
+        }
+
+
+        public async Task<ValidationResult> Handle(AlterarEnderecoCommand message, CancellationToken cancellationToken)
+        {
+            if (!message.EhValido()) return message.ValidationResult;
+
+            var enderecoAtualizado = new Endereco(message.Logradouro, message.Numero, message.Complemento, message.Bairro, message.Cep, message.Cidade, message.Estado, message.ClienteId);
+
+            var endereco = await _clienteRepository.ObterEnderecoPorId(message.Id);
+
+            if (endereco == null)
+            {
+                AdicionarErro("Endereço não encontrado, não será possível alterar o endereço");
+                return ValidationResult;
+            }
+
+            endereco.AtualizarEndereco(enderecoAtualizado);
+
+            _clienteRepository.AtualizarEndereco(endereco);
+
+            return await PersistirDados(_clienteRepository.UnitOfWork);
+        }
+
+
     }
 }

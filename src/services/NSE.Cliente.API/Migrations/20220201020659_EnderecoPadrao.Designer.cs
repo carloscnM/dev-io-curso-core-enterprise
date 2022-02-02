@@ -10,8 +10,8 @@ using NSE.Clientes.API.Data;
 namespace NSE.Clientes.API.Migrations
 {
     [DbContext(typeof(ClientesContext))]
-    [Migration("20211207201807_baseCliente")]
-    partial class baseCliente
+    [Migration("20220201020659_EnderecoPadrao")]
+    partial class EnderecoPadrao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,6 +25,9 @@ namespace NSE.Clientes.API.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EnderecoDefaultId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Excluido")
@@ -77,8 +80,7 @@ namespace NSE.Clientes.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId")
-                        .IsUnique();
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("Enderecos");
                 });
@@ -130,8 +132,9 @@ namespace NSE.Clientes.API.Migrations
             modelBuilder.Entity("NSE.Clientes.API.Models.Endereco", b =>
                 {
                     b.HasOne("NSE.Clientes.API.Models.Cliente", "Cliente")
-                        .WithOne("Endereco")
-                        .HasForeignKey("NSE.Clientes.API.Models.Endereco", "ClienteId")
+                        .WithMany("Enderecos")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");
@@ -139,7 +142,7 @@ namespace NSE.Clientes.API.Migrations
 
             modelBuilder.Entity("NSE.Clientes.API.Models.Cliente", b =>
                 {
-                    b.Navigation("Endereco");
+                    b.Navigation("Enderecos");
                 });
 #pragma warning restore 612, 618
         }

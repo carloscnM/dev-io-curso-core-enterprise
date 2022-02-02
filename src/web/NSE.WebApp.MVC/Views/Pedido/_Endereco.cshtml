@@ -1,25 +1,55 @@
 ﻿@model NSE.WebApp.MVC.Models.PedidoTransacaoViewModel
 
-
-<h4 class="card-title">Endereço</h4>
 @{
-    if (Model.Endereco == null)
+    IList<EnderecoViewModel> listaEnderecos = ViewBag.Enderecos;
+}
+
+
+<div class="row align-content-between" style="margin-bottom: 10px; padding:10px;">
+    <h4 class="card-title" style="margin-right: 20px">Endereço</h4>
+    <a href="javascript:void(0)" class="btn btn-primary endereco-new" data-toggle="modal" data-target="#enderecoModal"> <i class="fa fa-location-arrow"></i> Novo</a>
+</div>
+
+
+
+<div class="card" style="margin-top:10px; background-color: #e8e1e1">
+    
+    <div style="display: flex; justify-content: space-between; padding: 10px;">
+        <h5>Sua entrega será realizada em:</h5>
+        <a href="javascript:void(0)" class="text-primary" data-toggle="modal" data-target="#enderecoModal" styke="position:relative; float:rigth"> <i class="fas fa-pencil-alt"></i></a>
+    </div>
+    
+
+    <div class="card-body">
+        @Model.Endereco.ToString()
+    </div>
+</div>
+
+
+@{
+    if (listaEnderecos.Any())
     {
-        <div class="text-left">
-            <a href="javascript:void(0)" class="btn btn-primary float-md-left" data-toggle="modal" data-target="#enderecoModal"> <i class="fa fa-location-arrow"></i> Adicionar Endereço</a>
-        </div>
-    }
-    else
-    {
-        <div class="row">
-            <div class="col-9 text-left">
-                @Model.Endereco.ToString()
-            </div>
-            <div class="col-3 text-right">
-                <a href="javascript:void(0)" class="btn btn-primary float-md-right"> <i class="fa fa-location-arrow"></i> Alterar Endereço</a>
-            </div>
-        </div>
+        <h5 style="margin-top: 10px;">Endereços cadastrados:</h5>
     }
 }
 
+@{
+    foreach (var item in listaEnderecos)
+    {
+        if (item.Id != @Model.Endereco.Id)
+        {
+            <form  asp-action="AlterarEnderecoPadrao" asp-controller= "Cliente">
+                <input id="idEndereco" name="idEndereco"  value="@item.Id" type="hidden" class="form-control" />
+                <button type="submit" style="text-decoration: nome; border:none; background: none; width:100%; text-align: left;">
+                    <div class="card" id="cardEnderecoPedido" style="margin-top:10px">
+                        <div class="card-body">
+                            @item.ToString()
+                        </div>
+                    </div>
+                </button>
+            </form>
+        }
+
+    }
+}
 

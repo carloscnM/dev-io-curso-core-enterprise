@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace NSE.WebApp.MVC.Models
 {
     public class EnderecoViewModel
     {
+        public Guid? Id { get; set; }
         [Required]
         public string Logradouro { get; set; }
         [Required]

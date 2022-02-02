@@ -27,14 +27,44 @@ namespace NSE.Clientes.API.Controllers
         [HttpGet("cliente/endereco")]
         public async Task<IActionResult> ObterEndereco()
         {
+            Endereco endereco;
             _logger.LogInformation($"Obtendo endereço.... {_user.ObterUserId()}");
-            var endereco = await _clienteRepository.ObterEnderecoPorId(_user.ObterUserId());
+
+            var idEnderecoPadrao = await _clienteRepository.ObterEnderecoPadraoId(_user.ObterUserId());
+
+
+            endereco = idEnderecoPadrao.HasValue ? await _clienteRepository.ObterEnderecoPorId(_user.ObterUserId(), idEnderecoPadrao.Value)
+                        : await _clienteRepository.ObterEnderecoPorClienteId(_user.ObterUserId()) ;
+
 
             return endereco == null ? NotFound() : CustomResponse(endereco);
         }
 
+        [HttpGet("cliente/all-enderecos")]
+        public async Task<IActionResult> ObterEnderecoDisponiveis()
+        {
+            _logger.LogInformation($"Obtendo endereço.... {_user.ObterUserId()}");
+            var enderecos = await _clienteRepository.ObterTodosEnderecosEnderecoPorCliente(_user.ObterUserId());
+
+            return enderecos == null ? NotFound() : CustomResponse(enderecos);
+        }
+
         [HttpPost("cliente/endereco")]
         public async Task<IActionResult> AdicionarEndereco(AdicionarEnderecoCommand endereco)
+        {
+            endereco.ClienteId = _user.ObterUserId();
+            return CustomResponse(await _mediator.EnviarComando(endereco));
+        }
+
+        [HttpPut("cliente/endereco")]
+        public async Task<IActionResult> AlterarEndereco(AlterarEnderecoCommand endereco)
+        {
+            endereco.ClienteId = _user.ObterUserId();
+            return CustomResponse(await _mediator.EnviarComando(endereco));
+        }
+
+        [HttpPut("cliente/endereco/padrao")]
+        public async Task<IActionResult> AtualizarEnderecoPadrao(AtualizarEnderecoPadraoCommand endereco)
         {
             endereco.ClienteId = _user.ObterUserId();
             return CustomResponse(await _mediator.EnviarComando(endereco));

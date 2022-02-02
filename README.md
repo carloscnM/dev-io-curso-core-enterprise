@@ -41,9 +41,10 @@ Além das funcionalidades criadas durante o curso, serão feitas melhorias no si
 
 #### 🖥️ Web Site (E-commerce)
   No WebSite já existente, algumas melhorias serão aplicadas:
-  
+ 
+- [x] Permitir o cadastro e mais de 1 endereço por cliente 
 - [ ] Pagina de perfil
-- [ ] Permitir o cadastro e mais de 1 endereço por cliente
+
 
 #### 🖥️ Web Site DashBoard
   Criar uma aplicação web para administrar os cadastros essenciais para o funcionamento do E-commerce

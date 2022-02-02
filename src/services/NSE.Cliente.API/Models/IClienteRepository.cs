@@ -10,9 +10,17 @@ namespace NSE.Clientes.API.Models
     public interface IClienteRepository : IRepository<Cliente>
     {
         void Adicionar(Cliente cliente);
+        void Atualizar(Cliente cliente);
         Task<IEnumerable<Cliente>> ObterTodos();
         Task<Cliente> ObterPorCpf(string cpf);
+        Task<Cliente> ObterPorId(Guid id);
         void AdicionarEndereco(Endereco endereco);
-        Task<Endereco> ObterEnderecoPorId(Guid id);
+        void AtualizarEndereco(Endereco endereco);
+
+        Task<IList<Endereco>> ObterTodosEnderecosEnderecoPorCliente(Guid clienteId);
+        Task<Endereco> ObterEnderecoPorClienteId(Guid clienteId);
+        Task<Endereco> ObterEnderecoPorId(Guid enderecoId);
+        Task<Endereco> ObterEnderecoPorId(Guid clienteId, Guid enderecoId);
+        Task<Guid?> ObterEnderecoPadraoId(Guid clienteId);
     }
 }

@@ -29,6 +29,17 @@ namespace NSE.Clientes.API.Models
             ClienteId = clienteId;
         }
 
+        public void AtualizarEndereco(Endereco endereco)
+        {
+            Logradouro = endereco.Logradouro;
+            Numero = endereco.Numero;
+            Complemento = endereco.Complemento;
+            Bairro = endereco.Bairro;
+            Cep = endereco.Cep;
+            Cidade = endereco.Cidade;
+            Estado = endereco.Estado;
+        }
+
         // EF Constructor
         protected Endereco() { }
     }

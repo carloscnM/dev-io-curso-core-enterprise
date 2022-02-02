@@ -32,9 +32,10 @@ namespace NSE.Clientes.API.Data.Mappings
                     .HasColumnType($"varchar({Email.EnderecoMaxLength})");
             });
 
-            // 1 : 1 => Aluno : Endereco
-            builder.HasOne(c => c.Endereco)
-                .WithOne(c => c.Cliente);
+            // 1 : N => Aluno : Endereco
+            builder.HasMany(c => c.Enderecos)
+                    .WithOne(c => c.Cliente)
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable("Clientes");
         }
