@@ -24,6 +24,20 @@ namespace NSE.Clientes.API.Controllers
             _logger = logger;
         }
 
+        [HttpPut("/cliente")]
+        public async Task<IActionResult> AlterarCliente(AtualizarClienteCommand command)
+        {
+            command.Id = _user.ObterUserId();
+            return CustomResponse(await _mediator.EnviarComando(command));
+        }
+
+        [HttpGet("/cliente")]
+        public async Task<IActionResult> ObterDadosCliente()
+        {
+            var cliente = await _clienteRepository.ObterPorId(_user.ObterUserId());
+            return cliente == null ? NotFound() : CustomResponse(new {Nome = cliente.Nome, Email = cliente.Email.Endereco, Cpf = cliente.Cpf.Numero});;
+        }
+
         [HttpGet("cliente/endereco")]
         public async Task<IActionResult> ObterEndereco()
         {
@@ -60,6 +74,13 @@ namespace NSE.Clientes.API.Controllers
         public async Task<IActionResult> AlterarEndereco(AlterarEnderecoCommand endereco)
         {
             endereco.ClienteId = _user.ObterUserId();
+            return CustomResponse(await _mediator.EnviarComando(endereco));
+        }
+
+        [HttpDelete("cliente/endereco/{id}")]
+        public async Task<IActionResult> RemoverEndereco(string id)
+        {
+            RemoverEnderecoCommand endereco = new RemoverEnderecoCommand(new System.Guid(id), _user.ObterUserId());
             return CustomResponse(await _mediator.EnviarComando(endereco));
         }
 

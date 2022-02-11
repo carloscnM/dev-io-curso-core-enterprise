@@ -1372,3 +1372,7 @@ a[class*='card']:hover .title { color: #3167eb; }
     background-color: aquamarine;
 
 }
+
+.active-button {
+    background-color: rgba(42, 77, 235,0.5);
+}

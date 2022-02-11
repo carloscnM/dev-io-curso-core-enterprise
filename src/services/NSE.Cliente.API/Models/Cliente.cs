@@ -29,6 +29,11 @@ namespace NSE.Clientes.API.Models
             Email = new Email(email);
         }
 
+        public void AtualizarNome(string nome)
+        {
+            Nome = nome;
+        }
+
         public void AtribuirEnderecoDefault(Endereco endereco)
         {
             EnderecoDefaultId = endereco.Id;

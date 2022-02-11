@@ -78,6 +78,10 @@ namespace NSE.Clientes.API.Data.Repository
         {
             _context.Enderecos.Update(endereco);
         }
+        public void RemoverEndereco(Endereco endereco)
+        {
+            _context.Enderecos.Remove(endereco);
+        }
 
         public void Dispose()
         {

@@ -1,0 +1,182 @@
+﻿@model NSE.WebApp.MVC.Models.PerfilClienteViewModel
+
+@{
+    ViewData["Title"] = "Meu Perfil";
+}
+
+<section class="padding-y">
+
+    <div class="container">
+        <div class="col-md-12" style="padding-bottom: 35px">
+            <article class="card">
+                <header class="card-header" style="display: flex; justify-content: space-between; padding-right:10px; padding-left:20px">
+                    <b class="d-inline-block mr-3">Seus dados</b>
+                    <button class="text-primary" style="outline-style: none; border: 0; border-radius:8px" onclick="AtivaEdicaoPerfil()" id="butaoEditar"> <i class="fas fa-pencil-alt" style="color:blue"></i></button>
+                </header>
+                <div class="card-body">
+                    <form asp-action="AlterarDadosCliente" asp-controller="Perfil">
+                        <div class="form-row">
+                            <div class="form-group col-md-9">
+                                <label asp-for="Nome">Nome</label>
+                                <input asp-for="Nome" type="text" class="form-control" disabled placeholder="Carlos Mario Novais Oliveira">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="CPF">CPF</label>
+                                <input asp-for="CPF" type="text" class="form-control" disabled placeholder="128.037.785-25">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" disabled placeholder="Email">
+                        </div>
+
+                        <hr>
+                        <div class="row" style="float: right; padding:10px;">
+                            <button type="submit" class="btn btn-primary" id="salvarAlteracaoPerfil" disabled>Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-md-12" style="padding-bottom: 35px">
+            <article class="card">
+                <header class="card-header" style="display: flex; justify-content: space-between;">
+                    <b class="d-inline-block mr-3">Seus endereços</b>
+
+                    <button onclick="AtivarNovoEndereco()" class="btn btn-primary endereco-new" style="display: flex; gap: 2px; justify-content: center; align-items: center;">
+                        <i class="fa fa-plus"></i>
+                        Novo
+                    </button>
+
+                </header>
+                <div class="card-body">
+                    <div class="jumbotron" id="FormNovoEndereco" hidden>
+                        <form asp-action="NovoEndereco" asp-controller="Perfil">
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="Cep">Cep</label>
+                                    <input type="text" class="form-control" id="Cep" name="Cep" placeholder="Cep">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Rua</label>
+                                    <input type="text" class="form-control" id="Logradouro" name="Logradouro" placeholder="Rua">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="inputEmail4">Número</label>
+                                    <input type="text" class="form-control" id="Numero" name="Numero" placeholder="Número">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="inputEmail4">Complemento</label>
+                                    <input type="text" class="form-control" id="Complemento" name="Complemento" placeholder="Complemento">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="inputEmail4">Bairro</label>
+                                    <input type="text" class="form-control" id="Bairro" name="Bairro" placeholder="Bairro">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="inputEmail4">Cidade</label>
+                                    <input type="text" class="form-control" id="Cidade" name="Cidade" placeholder="Cidade">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="inputEmail4">Estado</label>
+                                    <input type="text" class="form-control" id="Estado" name="Estado" placeholder="Estado">
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: end; gap: 5px;">
+                                <input onclick="AtivarNovoEndereco()" type="button" value="Cancelar" class="btn btn-danger" />
+                                <input type="submit" value="Salvar" class="btn btn-success" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="accordion">
+                        @{
+                            foreach (var item in Model.Enderecos)
+                            {
+                                <div class="card" style="margin-top: 10px;">
+                                    <div class="card-header" id="headingOne">
+                                        <h5 class="mb-0" style="display: flex; justify-content: space-between">
+                                            @item.ToString()
+                                            <div style="display: flex; gap: 5px;">
+                                                <button class="btn btn-outline-warning btn-link collapsed" data-toggle="collapse" data-target="@string.Concat("#collapse_", item.Id.ToString())" aria-expanded="false" aria-controls="@string.Concat("collapse_", item.Id.ToString())">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </button>
+                                                <form asp-action="RemoverEndereco" asp-controller="Perfil">
+                                                    <input id="Id" name="Id" value="@item.Id" type="hidden" class="form-control" />
+                                                    <button type="submit" class="btn btn-outline-danger">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+
+                                        </h5>
+                                    </div>
+                                    <div id="@string.Concat("collapse_", item.Id.ToString())" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <form asp-action="AlterarEndereco" asp-controller="Perfil">
+                                                <input id="Id" name="Id" value="@item.Id" type="hidden" class="form-control" />
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-3">
+                                                        <label for="Cep">Cep</label>
+                                                        <input type="text" class="form-control" id="Cep" name="Cep" value="@item.Cep" placeholder="Cep">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="inputEmail4">Rua</label>
+                                                        <input type="text" class="form-control" id="Logradouro" name="Logradouro" value="@item.Logradouro" placeholder="Rua">
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="inputEmail4">Número</label>
+                                                        <input type="text" class="form-control" id="Numero" name="Numero" value="@item.Numero" placeholder="Número">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-3">
+                                                        <label for="inputEmail4">Complemento</label>
+                                                        <input type="text" class="form-control" id="Complemento" name="Complemento" value="@item.Complemento" placeholder="Complemento">
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="inputEmail4">Bairro</label>
+                                                        <input type="text" class="form-control" id="Bairro" name="Bairro" value="@item.Bairro" placeholder="Bairro">
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="inputEmail4">Cidade</label>
+                                                        <input type="text" class="form-control" id="Cidade" name="Cidade" value="@item.Cidade" placeholder="Cidade">
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="inputEmail4">Estado</label>
+                                                        <input type="text" class="form-control" id="Estado" name="Estado" value="@item.Estado" placeholder="Estado">
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex; justify-content: end; gap: 5px;">
+                                                    <input onclick="AtivarNovoEndereco()" type="button" value="Cancelar" class="btn btn-danger" />
+                                                    <input type="submit" value="Salvar" class="btn btn-success" />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+<script>
+    $(document).ready(function() {
+       BuscarCepPerfil();
+    });
+</script>
+
+}

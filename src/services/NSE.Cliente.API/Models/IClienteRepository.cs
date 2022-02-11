@@ -17,6 +17,7 @@ namespace NSE.Clientes.API.Models
         void AdicionarEndereco(Endereco endereco);
         void AtualizarEndereco(Endereco endereco);
 
+        void RemoverEndereco(Endereco endereco);
         Task<IList<Endereco>> ObterTodosEnderecosEnderecoPorCliente(Guid clienteId);
         Task<Endereco> ObterEnderecoPorClienteId(Guid clienteId);
         Task<Endereco> ObterEnderecoPorId(Guid enderecoId);

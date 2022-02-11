@@ -12,7 +12,9 @@ namespace NSE.Clientes.API.Application.Commands
         IRequestHandler<RegistrarClienteCommand, ValidationResult>,
         IRequestHandler<AdicionarEnderecoCommand, ValidationResult>,
         IRequestHandler<AlterarEnderecoCommand, ValidationResult>,
-        IRequestHandler<AtualizarEnderecoPadraoCommand, ValidationResult>
+        IRequestHandler<AtualizarEnderecoPadraoCommand, ValidationResult>,
+        IRequestHandler<AtualizarClienteCommand, ValidationResult>,
+        IRequestHandler<RemoverEnderecoCommand, ValidationResult>
     {
         private readonly IClienteRepository _clienteRepository;
 
@@ -115,6 +117,34 @@ namespace NSE.Clientes.API.Application.Commands
             return await PersistirDados(_clienteRepository.UnitOfWork);
         }
 
+        public async Task<ValidationResult> Handle(AtualizarClienteCommand message, CancellationToken cancellationToken)
+        {
+            if (!message.EhValido()) return message.ValidationResult;
 
+            Cliente cliente = await _clienteRepository.ObterPorId(message.Id);
+
+            cliente.AtualizarNome(message.Nome);
+
+            _clienteRepository.Atualizar(cliente);
+
+            return await PersistirDados(_clienteRepository.UnitOfWork);
+        }
+
+        public async Task<ValidationResult> Handle(RemoverEnderecoCommand message, CancellationToken cancellationToken)
+        {
+            if (!message.EhValido()) return message.ValidationResult;
+
+            Endereco endereco = await _clienteRepository.ObterEnderecoPorId(message.ClienteId, message.Id);
+
+            if (endereco == null)
+            {
+                AdicionarErro("Endereço não encontrado, não será possível remover o endereço");
+                return ValidationResult;
+            }
+
+            _clienteRepository.RemoverEndereco(endereco);
+
+            return await PersistirDados(_clienteRepository.UnitOfWork);
+        }
     }
 }
